@@ -1,6 +1,7 @@
 # Clearlinux Aliyun
 
 - [ECS setup](#ECS-setup)
+- [Welcome Message setup](#Welcome-message-setup)
 - [Qemu setup](#Qemu-setup)
 
 ## ECS setup
@@ -14,6 +15,11 @@ Please notice the hightlights with red circles!!!
 ![](img/create_instance_3.png?raw=true)
 ![](img/create_instance_4.png?raw=true)
 ![](img/create_instance_5.png?raw=true)
+
+## Welcome message setup
+```
+echo "Welcome to Clear Linux OS !" >  /etc/motd
+```
 
 ## Qemu setup
 For clearlinux mixer image test, it needs to run Qemu inside ECS instance. The official clearlinux release includes a [qemu start script](https://download.clearlinux.org/image/start_qemu.sh) to launch clearlinux image with KVM enabled. 

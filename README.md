@@ -45,6 +45,11 @@ systemctl restart sshd
 
 git config --global user.name "$USER_NAME"
 git config --global user.email "$USER_NAME@example.com"
+
+# it needs docker for mixer
+systemctl enable docker
+systemctl start docker
+usermod -G docker -a $USER_NAME
 ```
 ### download clearlinux source
 Login as "clear" and download clearlinux source
@@ -58,30 +63,26 @@ make clone #To clone a single package repo with NAME, run "make clone_NAME"
 ```
 ## Examples
 ### Build pre-packaged Clear packages
-[Example to build "joe"](examples/example_build_joe.sh?raw=true).
+[Example to build "joe"](examples/example01_build_joe.sh?raw=true).
 
 If you did not run "make clone" to download all clearlinux packages, it can be download by below command.
 ```
 make clone_joe
 ```
 ### Create new package with autospec
-[helloclear example](examples/example_autospec_helloclear.sh?raw=true)
+[helloclear example](examples/example02_autospec_helloclear.sh?raw=true)
 
-[opae-sdk example](examples/example_autospec_opae-sdk.sh?raw=true)
+[opae-sdk example](examples/example03_autospec_opae-sdk.sh?raw=true)
 ### Test package with Qemu
-[helloclear quick test example](examples/example_quick_test.sh?raw=true)
+[helloclear quick test example](examples/example04_quick_test.sh?raw=true)
 ### Create clearlinux with mixer
 #### web server setup
-Refer to [mixer websetup example](examples/example_mixer_step1_websetup.sh?raw=true) to setup web server for clearlinux update.
+Refer to [mixer websetup example](examples/example05_mixer_step1_websetup.sh?raw=true) to setup web server for clearlinux update.
 #### create update and release image from scratch
-[create update and image example](examples/example_mixer_step2.sh?raw=true)
+[create update and image example](examples/example06_mixer_step2.sh?raw=true)
 After creating the release.img, it can test this image with qemu.
 ```
-if [ -e /dev/kvm ]; then
-	echo "run qemu: sudo ./start_qemu.sh release.img"
-else
-	echo "run qemu: sudo ./start_qemu_nokvm.sh release.img"
-fi
+sudo ./start_qemu.sh release.img"
 ```
 It can run swupd command to check version and bundles inside qemu.
 ```
@@ -94,7 +95,7 @@ joe #CTRL+c to exit
 poweroff #or press CTRL-a-x to exit qemu
 ```
 #### create update based on previous version
-[create delta update example](examples/example_mixer_step3.sh?raw=true)
+[create delta update example](examples/example07_mixer_step3.sh?raw=true)
 It can run swupd command to update and install new bundle inside qemu.
 ```
 swupd check-update
