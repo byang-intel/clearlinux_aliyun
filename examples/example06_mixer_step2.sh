@@ -1,14 +1,14 @@
 #!/bin/bash -e
 
-CLR_VER=25860
-
 my_dir=`dirname $0`
+
+. $my_dir/config
 
 sudo rm -rf ~/mixer
 mkdir ~/mixer
 cd ~/mixer
 
-mixer init --clear-version $CLR_VER --mix-version 10 --local-rpms
+mixer init --upstream-url $MIRROR --clear-version $CLR_VER --mix-version 10 --local-rpms
 mixer versions
 mixer bundle list
 
@@ -33,7 +33,7 @@ mixer bundle add editors
 sed "s/.*joe.*//g" -i upstream-bundles/clr-bundles-$CLR_VER/bundles/editors
 mixer bundle list --tree
 
-sudo mixer repo set-url clear https://cdn.download.clearlinux.org/releases/$CLR_VER/clear/x86_64/os/
+sudo mixer repo set-url clear $MIRROR/releases/$CLR_VER/clear/x86_64/os/
 
 #sudo mixer build bundles --native
 #sudo mixer build update --native
@@ -46,9 +46,9 @@ sed "s/kernel-native/kernel-kvm/g" -i release-image-config.json
 #sudo mixer build image --native
 sudo mixer build image
 
-[ -e OVMF.fd ] || curl -O https://cdn.download.clearlinux.org/image/OVMF.fd 
+[ -e OVMF.fd ] || curl -O $MIRROR/image/OVMF.fd 
 if [ ! -e start_qemu.sh ]; then
-	curl -O https://cdn.download.clearlinux.org/image/start_qemu.sh
+	curl -O $MIRROR/image/start_qemu.sh
 	if [ ! -e /dev/kvm ]; then
 		sed -i -e "s/-enable-kvm//g" -e "s/-cpu host/-cpu Haswell/g" -e "s/-smp sockets=.,cpus=.,cores=./-smp sockets=1,cpus=`nproc`,cores=`nproc`/g" start_qemu.sh
 	fi
