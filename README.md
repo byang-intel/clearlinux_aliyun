@@ -7,6 +7,7 @@
 	* [install bundles for clearlinux development](#install-bundles-for-clearlinux-development)
 	* [setup user for clearlinux development](#setup-user-for-clearlinux-development)
 	* [download clearlinux source](#download-clearlinux-source)
+	* [Optional - local clearlinux repo mirror setup](#Optional---local-clearlinux-repo-mirror-setup)
 - [Examples](#examples)
 	* [Build pre-packaged Clear packages](#build-pre-packaged-clear-packages)
 	* [Create new package with autospec](#create-new-package-with-autospec)
@@ -60,6 +61,25 @@ chmod +x user-setup.sh
 ./user-setup.sh
 cd clearlinux
 make clone #To clone a single package repo with NAME, run "make clone_NAME"
+```
+## Optional - local clearlinux repo mirror setup
+By default, both mock and mixer have local cache to speed up the build and mixing. If you have a team working on clearlinux and want to speed up team members build/mixing, it can setup a local mirror.
+
+Download and setup clearlinux repo on a web server:
+```
+CLR_VER=25860
+
+wget --mirror --convert-links --adjust-extension --page-requisites --no-parent --continue https://download.clearlinux.org/releases/$CLR_VER/clear/x86_64/os
+```
+Set the mirror url in mock config file:
+```
+# clearlinux/projects/common/conf/clear.cfg
+
+baseurl=http://<mirror web server>/
+```
+Use the mirror in mixer:
+```
+sudo mixer repo set-url clear http://<mirror web server>/
 ```
 ## Examples
 ### Build pre-packaged Clear packages
