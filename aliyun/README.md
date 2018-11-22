@@ -3,6 +3,7 @@
 - [ECS setup](#ECS-setup)
 - [Welcome Message setup](#Welcome-message-setup)
 - [Qemu setup](#Qemu-setup)
+- [Demo Video](#Demo-Video)
 
 ## ECS setup
 Clearlinux can be installed from Aliyun marketplace. A typical clearlinux instance can be created as below example.
@@ -37,3 +38,5 @@ qemu-system-x86_64 \
     -device virtio-rng-pci \
     -debugcon file:debug.log -global isa-debugcon.iobase=0x402 $@
 ```
+## Demo Video
+[cl_aliyun_demo.mp4](https://github.com/byang-intel/clearlinux_bkm/blob/master/aliyun/cl_aliyun_demo.mp4?raw=true)
